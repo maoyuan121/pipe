@@ -1,47 +1,31 @@
-// Pipe - A small and beautiful blogging platform written in golang.
-// Copyright (C) 2017-present, b3log.org
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package model
 
 import (
 	"github.com/b3log/pipe/util"
 )
 
-// User model.
+// 用户
 type User struct {
 	Model
 
-	Name              string `gorm:"size:32" json:"name"`
-	Nickname          string `gorm:"size:32" json:"nickname"`
-	AvatarURL         string `gorm:"size:255" json:"avatarURL"`
-	B3Key             string `gorm:"size:32" json:"b3Key"`
-	Locale            string `gorm:"size:32" json:"locale"`
-	TotalArticleCount int    `json:"totalArticleCount"`
-	GithubId          string `gorm:"255" json:"githubId"`
+	Name              string `gorm:"size:32" json:"name"`       // 用户名
+	Nickname          string `gorm:"size:32" json:"nickname"`   // 昵称
+	AvatarURL         string `gorm:"size:255" json:"avatarURL"` // 头像 url 地址
+	B3Key             string `gorm:"size:32" json:"b3Key"`      // todo
+	Locale            string `gorm:"size:32" json:"locale"`     // 哪个语言
+	TotalArticleCount int    `json:"totalArticleCount"`         // 总文章数
+	GithubId          string `gorm:"255" json:"githubId"`       // todo
 }
 
-// User roles.
+// 用户角色
 const (
-	UserRoleNoLogin = iota
-	UserRolePlatformAdmin
-	UserRoleBlogAdmin
-	UserRoleBlogUser
+	UserRoleNoLogin       = iota // 匿名用户
+	UserRolePlatformAdmin        // 平台管理员
+	UserRoleBlogAdmin            // 博客管理员
+	UserRoleBlogUser             // 博客用户
 )
 
-// AvatarURLWithSize returns avatar URL with the specified size.
+// 返回指定图片大小的 avatar url
 func (u *User) AvatarURLWithSize(size int) string {
 	return util.ImageSize(u.AvatarURL, size, size)
 }

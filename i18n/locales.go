@@ -31,10 +31,11 @@ import (
 // Logger
 var logger = gulu.Log.NewLogger(os.Stdout)
 
+// 本地化结构
 type locale struct {
-	Name     string
-	Langs    map[string]interface{}
-	TimeZone string
+	Name     string                 // 名称
+	Langs    map[string]interface{} // 语言包
+	TimeZone string                 // 时区
 }
 
 var locales = map[string]locale{}

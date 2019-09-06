@@ -1,19 +1,3 @@
-// Pipe - A small and beautiful blogging platform written in golang.
-// Copyright (C) 2017-present, b3log.org
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 // Package util defines variety of utilities.
 package model
 
@@ -43,13 +27,13 @@ var Conf *Configuration
 // UserAgent represents HTTP client user agent.
 var UserAgent = "Pipe/" + Version + "; +https://github.com/b3log/pipe"
 
-// Models represents all models..
+// Models 表示所有的模型
 var Models = []interface{}{
 	&User{}, &Article{}, &Comment{}, &Navigation{}, &Tag{},
 	&Category{}, &Archive{}, &Setting{}, &Correlation{},
 }
 
-// Table prefix.
+// 表前缀
 const tablePrefix = "b3_pipe_"
 
 // ZeroPushTime represents zero push time.
@@ -61,18 +45,18 @@ type Configuration struct {
 	StaticServer          string // static resources server scheme, host and port
 	StaticResourceVersion string // version of static resources
 	LogLevel              string // logging level: trace/debug/info/warn/error/fatal
-	ShowSQL               bool   // whether print sql in log
+	ShowSQL               bool   // 是否在 log 中打印 sql
 	SessionSecret         string // HTTP session secret
 	SessionMaxAge         int    // HTTP session max age (in second)
-	RuntimeMode           string // runtime mode (dev/prod)
-	SQLite                string // SQLite database file path
-	MySQL                 string // MySQL connection URL
-	Port                  string // listen port
+	RuntimeMode           string // 运行模式 (dev/prod)
+	SQLite                string // SQLite 数据库我呢见地址
+	MySQL                 string // MySQL 连接 URL
+	Port                  string // 端口
 	AxiosBaseURL          string // axio base URL
-	MockServer            string // mock server
+	MockServer            string // mock 服务器地址
 }
 
-// LoadConf loads the configurations. Command-line arguments will override configuration file.
+// 从加载配置，命令行的参数会覆盖配置文件的配置
 func LoadConf() {
 	version := flag.Bool("version", false, "prints current pipe version")
 	confPath := flag.String("conf", "pipe.json", "path of pipe.json")
