@@ -29,9 +29,9 @@
   export default {
     data () {
       return {
-        errorMsg: '',
-        error: false,
-        name: '',
+        errorMsg: '', // 错误消息
+        error: false, // 是否发生错误
+        name: '', 
         requiredRules: [
           (v) => required.call(this, v),
           (v) => maxSize.call(this, v, 32)
