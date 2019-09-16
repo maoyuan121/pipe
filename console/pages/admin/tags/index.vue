@@ -45,13 +45,13 @@
   export default {
     data () {
       return {
-        editId: '',
-        showForm: false,
-        currentPageNum: 1,
-        pageCount: 1,
-        windowSize: 1,
-        list: [],
-        keyword: ''
+        editId: '', // 编辑的标签 id，为 0 表示新建
+        showForm: false, // 是否显示表单 （但是这里好像没有表单）
+        currentPageNum: 1, // 当前页码
+        pageCount: 1, // 总页数
+        windowSize: 1, // 最多显示多少个页码按钮
+        list: [], // 标签集合
+        keyword: '' // 搜索关键字
       }
     },
     head () {
@@ -63,6 +63,7 @@
       openURL (url) {
         window.location.href = url
       },
+      // 获取标签集合
       async getList (currentPage = 1) {
         const responseData = await this.axios.get(`/console/taglist?p=${currentPage}&key=${this.keyword}`)
         if (responseData) {
@@ -74,7 +75,7 @@
       },
       async remove (id) {
         const responseData = await this.axios.delete(`/console/tags/${id}`)
-        if (responseData === null) {
+        if (responseData === null) { // 成功
           this.$store.commit('setSnackBar', {
             snackBar: true,
             snackMsg: this.$t('deleteSuccess', this.$store.state.locale),

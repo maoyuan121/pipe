@@ -57,9 +57,9 @@
   export default {
     data () {
       return {
-        isLatest: true,
-        download: '',
-        version: ''
+        isLatest: true, // 是否始最新的版本
+        download: '', // 下载地址
+        version: '' // 版本号
       }
     },
     head () {

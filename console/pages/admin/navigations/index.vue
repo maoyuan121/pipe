@@ -73,11 +73,11 @@
     data () {
       return {
         editId: '',
-        showForm: false,
-        currentPageNum: 1,
-        pageCount: 1,
-        windowSize: 1,
-        list: []
+        showForm: false, // 是否显示表单
+        currentPageNum: 1, // 当前页码
+        pageCount: 1, // 总共多少页
+        windowSize: 1, // 最多显示多少个页码按钮
+        list: [] // 导航集合
       }
     },
     head () {

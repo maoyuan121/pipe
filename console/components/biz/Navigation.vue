@@ -53,12 +53,12 @@
     },
     data () {
       return {
-        errorMsg: '',
-        error: false,
-        title: '',
-        url: '',
-        iconURL: '',
-        openMethod: '',
+        errorMsg: '', // 错误信息
+        error: false, // 是否出错
+        title: '', // 导航名
+        url: '', // url
+        iconURL: '', // 图标 url
+        openMethod: '', // 打开方式。原地打开、新开、父跳转、top 跳转
         openMethods: [
           {
             'text': this.$t('openMethod1', this.$store.state.locale),
@@ -77,16 +77,19 @@
             'value': '_top'
           }
         ],
+        // 导航名的验证规则
         titleRules: [
-          (v) => required.call(this, v),
-          (v) => maxSize.call(this, v, 128)
+          (v) => required.call(this, v), // 必填
+          (v) => maxSize.call(this, v, 128) // 长度最多 128 个字符
         ],
+        // 连接地址的验证规则
         linkRules: [
-          (v) => required.call(this, v),
-          (v) => maxSize.call(this, v, 255)
+          (v) => required.call(this, v), // 必填
+          (v) => maxSize.call(this, v, 255) // 长度最多 255 个字符
         ],
+        // 图标的验证规则
         iconURLRules: [
-          (v) => maxSize.call(this, v, 255)
+          (v) => maxSize.call(this, v, 255) // 长度最多 255 个字符
         ]
       }
     },
@@ -96,6 +99,7 @@
       }
     },
     methods: {
+      // 新建|编辑导航
       async created () {
         if (!this.$refs.form.validate()) {
           return
@@ -122,6 +126,7 @@
           this.$set(this, 'errorMsg', responseData.msg)
         }
       },
+      // 根据 id 获取导航
       async init () {
         if (this.id === 0) {
           return

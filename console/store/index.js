@@ -1,9 +1,9 @@
 import vueAxios from '~/plugins/axios'
 
 export const state = () => ({
-  locale: 'zh_CN',
-  version: '1.0.0',
-  isInit: false,
+  locale: 'zh_CN', // 选择的语言
+  version: '1.0.0', // 版本号
+  isInit: false, // 是否初始
   name: '',
   nickname: '',
   blogTitle: '',
@@ -14,14 +14,16 @@ export const state = () => ({
     title: '',
     id: ''
   }],
-  snackMsg: '',
-  snackBar: false,
-  snackModify: 'error',
-  menu: [],
+  snackMsg: '', // 弹出层的消息内容
+  snackBar: false, // 是否显示弹出层
+  snackModify: 'error', // 弹出层的类型：成功、失败
+  menu: [], // 管理页面的左侧菜单
   tagsItems: [],
   bodySide: ''
 })
 
+// mutation 只能有同步方法
+// 用于改变 store 的数据
 export const mutations = {
   setMenu (state, data) {
     state.menu = data
@@ -69,6 +71,8 @@ export const mutations = {
   }
 }
 
+// action 可以有异步方法
+// action 提交的是 mutation，而不是直接变更状态
 export const actions = {
   async nuxtClientInit ({ commit, state }, { app }) {
     // TrimB3Id

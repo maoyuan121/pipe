@@ -28,8 +28,8 @@
   export default {
     data () {
       return {
-        list: [],
-        currentName: ''
+        list: [], // 主题集合
+        currentName: '' // 当前使用的主题名
       }
     },
     head () {
@@ -38,12 +38,13 @@
       }
     },
     methods: {
+      // 应用主题
       async setup (name) {
         if (name === this.currentName) {
           return
         }
         const responseData = await this.axios.put(`/console/themes/${name}`)
-        if (responseData.code === 0) {
+        if (responseData.code === 0) { // 成功
           this.$store.commit('setSnackBar', {
             snackBar: true,
             snackMsg: this.$t('setupSuccess', this.$store.state.locale),
@@ -51,7 +52,7 @@
           })
 
           this.$set(this, 'currentName', name)
-        } else {
+        } else { // 出错
           this.$store.commit('setSnackBar', {
             snackBar: true,
             snackMsg: responseData.msg

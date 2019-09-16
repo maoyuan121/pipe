@@ -63,12 +63,12 @@
     },
     data () {
       return {
-        showForm: false,
-        currentPageNum: 1,
-        pageCount: 1,
-        windowSize: 1,
-        list: [],
-        keyword: ''
+        showForm: false, // 是否显示表单
+        currentPageNum: 1, // 当前页码
+        pageCount: 1, // 总页数
+        windowSize: 1, // 显示多少个分页按钮
+        list: [], // 用户列表
+        keyword: '' // 搜索关键字
       }
     },
     head () {
@@ -77,6 +77,8 @@
       }
     },
     methods: {
+      // 获取角色名
+      // 1：超级管理员，2:博客管理员，3:博客用户，4：被禁用的用户，默认为博客用户
       getRoleName (role) {
         let roleName = this.$t('blogUser', this.$store.state.locale)
         switch (role) {
@@ -97,6 +99,7 @@
         }
         return roleName
       },
+      // 获取用户列表
       async getList (currentPage = 1) {
         const responseData = await this.axios.get(`/console/users?p=${currentPage}&key=${this.keyword}`)
         if (responseData) {
@@ -106,6 +109,8 @@
           this.$set(this, 'windowSize', document.documentElement.clientWidth < 721 ? 5 : responseData.pagination.windowSize)
         }
       },
+      // 禁用|解禁
+      // type 为 prohibit 等于禁用，为 unprohibit 等于解禁
       async prohibit (id, type) {
         const responseData = await this.axios.put(`/console/users/${id}/${type}`)
         if (responseData.code === 0) {
@@ -117,10 +122,13 @@
           this.$set(this, 'errorMsg', responseData.msg)
         }
       },
+      // 添加成功事件的 handler
+      // 重新获取用户集合，隐藏表单
       addSuccess () {
         this.getList()
         this.$set(this, 'showForm', false)
       },
+      // 显示表单
       edit () {
         this.$set(this, 'showForm', true)
       }

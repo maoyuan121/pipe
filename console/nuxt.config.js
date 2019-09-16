@@ -1,9 +1,14 @@
 const env = require(`../pipe.json`)
 
 module.exports = {
+  /*
+  ** 该配置项用于定义应用客户端和服务端的环境变量。
+  ** 详见：https://zh.nuxtjs.org/api/configuration-env
+  */
   env,
   /*
-  ** Headers of the page
+  ** 该配置项用于配置应用默认的meta标签。
+  ** 详见：https://zh.nuxtjs.org/api/configuration-head
   */
   head: {
     title: 'Pipe',
@@ -18,13 +23,22 @@ module.exports = {
     ]
   },
   /*
-  ** Customize the progress bar color
+  ** 该配置项用于个性化定制 Nuxt.js 使用的加载组件。
+  ** 详见：https://zh.nuxtjs.org/api/configuration-loading
   */
   loading: { color: '#4a4a4a' },
+  /*
+  ** 该配置项用于定义应用的全局（所有页面均需引用的）样式文件、模块或第三方库。
+  ** 详见：https://zh.nuxtjs.org/api/configuration-css/
+  */
   css: [
     'vuetify/dist/vuetify.min.css',
     '~assets/scss/main.scss'
   ],
+  /*
+  ** 该配置项用于配置那些需要在 根vue.js应用 实例化之前需要运行的 Javascript 插件。
+  ** https://zh.nuxtjs.org/api/configuration-plugins
+  */
   plugins: [
     { src: '~/plugins/axios.js', ssr: false },
     { src: '~/plugins/init.js', ssr: false },
@@ -33,6 +47,7 @@ module.exports = {
   mode: 'spa',
   /*
   ** Build configuration
+  ** 详见：https://zh.nuxtjs.org/api/configuration-build
   */
   build: {
     publicPath: (env.StaticServer ||  env.Server) + '/console/dist/',
@@ -52,9 +67,17 @@ module.exports = {
       }
     }
   },
+  /*
+  ** 该配置项可用于覆盖 Nuxt.js 默认的 vue-router 配置。
+  ** 详见：https://zh.nuxtjs.org/api/configuration-router
+  */
   // router: {
   //   middleware: ['authenticated']
   // },
+  /*
+  ** 该配置项允许您将Nuxt模块添加到项目中。
+  ** 详见：https://zh.nuxtjs.org/api/configuration-modules
+  */
   modules: ['@nuxtjs/proxy'],
   proxy: {
     '/api': {

@@ -56,22 +56,22 @@
     },
     data () {
       return {
-        errorMsg: '',
-        error: false,
-        title: '',
-        url: '',
-        description: '',
-        tags: '',
-        titleRules: [
-          (v) => required.call(this, v),
-          (v) => maxSize.call(this, v, 128)
+        errorMsg: '', // 错误消息
+        error: false, // 是否发生错误
+        title: '', // 类别名
+        url: '', // url
+        description: '', // 描述
+        tags: '', // 标签
+        titleRules: [ // 验证标题
+          (v) => required.call(this, v), // 必填
+          (v) => maxSize.call(this, v, 128) // 长度不得超过 128 个字符
         ],
-        descriptionRules: [
-          (v) => maxSize.call(this, v, 255)
+        descriptionRules: [ // 验证描述
+          (v) => maxSize.call(this, v, 255) // 长度不得超过 255 个字符
         ],
-        URIRules: [
-          (v) => required.call(this, v),
-          (v) => maxSize.call(this, v, 255)
+        URIRules: [ // 验证 URL
+          (v) => required.call(this, v), // 必填
+          (v) => maxSize.call(this, v, 255) // 长度不得超过 255 个字符
         ],
         tagsRules: [
           (v) => this.tags.length > 0 || this.$t('required', this.$store.state.locale)
@@ -84,6 +84,7 @@
       }
     },
     methods: {
+      // 创建/编辑 类别
       async created () {
         if (!this.$refs.form.validate()) {
           return
@@ -104,13 +105,14 @@
         if (responseData.code === 0) {
           this.$set(this, 'error', false)
           this.$set(this, 'errorMsg', '')
-          this.$emit('addSuccess')
+          this.$emit('addSuccess') // 触发定义在该组建上的 addSuccess 事件。 <category v-if="showForm" :show.sync="showForm" @addSuccess="addSuccess" :id="editId"></category>
         } else {
           this.$set(this, 'error', true)
           this.$set(this, 'errorMsg', responseData.msg)
         }
       },
-      async init () {
+      // 如果 id > 0 从数据库里面取出这个类别的信息赋给相应的 data 属性
+      async init () { 
         if (this.id === 0) {
           return
         }
@@ -124,8 +126,9 @@
       }
     },
     mounted () {
-      this.init()
+      this.init() 
       // get tags
+      // 异步操作，例如向后台提交数据，写法： this.$store.dispatch('actionName',值)
       this.$store.dispatch('getTags')
     }
   }
