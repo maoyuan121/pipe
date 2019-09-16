@@ -1,4 +1,3 @@
-// Package console defines console controllers.
 package console
 
 import (
@@ -45,7 +44,7 @@ func PushArticle2RhyAction(c *gin.Context) {
 	service.Article.ConsolePushArticle(article)
 }
 
-// MarkdownAction handles markdown text to HTML.
+// 将 MD 转换成 HTML
 func MarkdownAction(c *gin.Context) {
 	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -66,7 +65,7 @@ func MarkdownAction(c *gin.Context) {
 var uploadTokenCheckTime, uploadTokenTime int64
 var uploadToken, uploadURL = "", "https://hacpai.com/upload/client"
 
-// UploadTokenAction gets a upload token.
+// 获取上传的 TOKEN 和 上传的 URL
 func UploadTokenAction(c *gin.Context) {
 	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -204,7 +203,7 @@ func GetArticleAction(c *gin.Context) {
 	result.Data = data
 }
 
-// GetArticlesAction gets articles.
+// 查询指定博客下面的文章列表
 func GetArticlesAction(c *gin.Context) {
 	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -253,7 +252,7 @@ func GetArticlesAction(c *gin.Context) {
 	result.Data = data
 }
 
-// RemoveArticleAction removes an article.
+// 删除一篇文章
 func RemoveArticleAction(c *gin.Context) {
 	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -276,7 +275,7 @@ func RemoveArticleAction(c *gin.Context) {
 	}
 }
 
-// RemoveArticlesAction removes articles.
+// 批量删除文章
 func RemoveArticlesAction(c *gin.Context) {
 	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -300,7 +299,7 @@ func RemoveArticlesAction(c *gin.Context) {
 	}
 }
 
-// UpdateArticleAction updates an article.
+// 编辑文章
 func UpdateArticleAction(c *gin.Context) {
 	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -364,7 +363,7 @@ func UpdateArticleAction(c *gin.Context) {
 	}
 }
 
-// GetArticleThumbsAction gets article thumbnails.
+// 随机获取几张用于文章的缩略图
 func GetArticleThumbsAction(c *gin.Context) {
 	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)

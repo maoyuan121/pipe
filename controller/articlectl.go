@@ -1,19 +1,3 @@
-// Pipe - A small and beautiful blogging platform written in golang.
-// Copyright (C) 2017-present, b3log.org
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package controller
 
 import (
@@ -33,6 +17,7 @@ import (
 	"github.com/vinta/pangu"
 )
 
+// 文章列表， 博客首页
 func showArticlesAction(c *gin.Context) {
 	page := util.GetPage(c)
 	dataModel := getDataModel(c)
@@ -104,6 +89,7 @@ func showArticlesAction(c *gin.Context) {
 	c.HTML(http.StatusOK, getTheme(c)+"/index.html", dataModel)
 }
 
+// 文章详细页
 func showArticleAction(c *gin.Context) {
 	dataModel := getDataModel(c)
 	blogID := getBlogID(c)
@@ -250,6 +236,7 @@ func showArticleAction(c *gin.Context) {
 	go service.Article.IncArticleViewCount(articleModel)
 }
 
+// 上一篇文章
 func fillPreviousArticle(c *gin.Context, article *model.Article, dataModel *DataModel) {
 	previous := service.Article.GetPreviousArticle(article.ID, article.BlogID)
 	if nil == previous {
@@ -269,6 +256,7 @@ func fillPreviousArticle(c *gin.Context, article *model.Article, dataModel *Data
 	(*dataModel)["PreviousArticle"] = previousArticle
 }
 
+// 下一篇文章
 func fillNextArticle(c *gin.Context, article *model.Article, dataModel *DataModel) {
 	next := service.Article.GetNextArticle(article.ID, article.BlogID)
 	if nil == next {
@@ -317,6 +305,7 @@ func toc(article *model.ThemeArticle) string {
 	return builder.String()
 }
 
+// 获取 N 篇推荐文章
 func getRecommendArticles(size int) []*model.ThemeArticle {
 	var ret []*model.ThemeArticle
 

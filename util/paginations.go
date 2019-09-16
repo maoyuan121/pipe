@@ -1,19 +1,3 @@
-// Pipe - A small and beautiful blogging platform written in golang.
-// Copyright (C) 2017-present, b3log.org
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package util
 
 import (
@@ -23,22 +7,23 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Pagination represents pagination info.
+// 分页信息
 type Pagination struct {
-	CurrentPageNum  int    `json:"currentPageNum"`
-	PageSize        int    `json:"pageSize"`
-	PageCount       int    `json:"pageCount"`
-	WindowSize      int    `json:"windowSize"`
-	RecordCount     int    `json:"recordCount"`
-	PageNums        []int  `json:"pageNums"`
-	NextPageNum     int    `json:"nextPageNum"`
-	PreviousPageNum int    `json:"previousPageNum"`
-	FirstPageNum    int    `json:"firstPageNum"`
-	LastPageNum     int    `json:"lastPageNum"`
-	PageURL         string `json:"pageURL"`
+	CurrentPageNum  int    `json:"currentPageNum"`  // 当前是那一页
+	PageSize        int    `json:"pageSize"`        // 一页多少条数据
+	PageCount       int    `json:"pageCount"`       // 总页数
+	WindowSize      int    `json:"windowSize"`      // 最多显示多少个页码按钮
+	RecordCount     int    `json:"recordCount"`     // 总记录数
+	PageNums        []int  `json:"pageNums"`        // 页码按钮集合
+	NextPageNum     int    `json:"nextPageNum"`     // 下一页的页码
+	PreviousPageNum int    `json:"previousPageNum"` // 上一页的页码
+	FirstPageNum    int    `json:"firstPageNum"`    // 第一页
+	LastPageNum     int    `json:"lastPageNum"`     // 最后一页的页码
+	PageURL         string `json:"pageURL"`         // todo
 }
 
-// GetPage returns paging parameter.
+// 获取指定的页码
+// 从 querystring 的 p 参数中获取
 func GetPage(c *gin.Context) int {
 	ret, _ := strconv.Atoi(c.Query("p"))
 	if 1 > ret {
@@ -48,7 +33,7 @@ func GetPage(c *gin.Context) int {
 	return ret
 }
 
-// NewPagination creates a new pagination with the specified current page num, page size, window size and record count.
+// 实例化一个分页信息
 func NewPagination(currentPageNum, pageSize, windowSize, recordCount int) *Pagination {
 	pageCount := int(math.Ceil(float64(recordCount) / float64(pageSize)))
 
@@ -83,6 +68,7 @@ func NewPagination(currentPageNum, pageSize, windowSize, recordCount int) *Pagin
 	}
 }
 
+// 获取页码按钮集合
 func paginate(currentPageNum, pageSize, pageCount, windowSize int) []int {
 	var ret []int
 

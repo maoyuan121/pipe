@@ -51,14 +51,14 @@ const (
 const (
 	SettingCategoryPreference = "preference"
 
-	SettingNamePreferenceArticleListPageSize        = "preferenceArticleListPageSize"
-	SettingNamePreferenceArticleListWindowSize      = "preferenceArticleListWindowSize"
-	SettingNamePreferenceArticleListStyle           = "preferenceArticleListStyle"
-	SettingNamePreferenceMostCommentArticleListSize = "preferenceMostCommentArticleListSize"
-	SettingNamePreferenceMostUseTagListSize         = "preferenceMostUseTagListSize"
-	SettingNamePreferenceMostViewArticleListSize    = "preferenceMostViewArticleListSize"
-	SettingNamePreferenceRecentCommentListSize      = "preferenceRecentCommentListSize"
-	SettingNamePreferenceRecommendArticleListSize   = "preferenceRecommendArticleListSize"
+	SettingNamePreferenceArticleListPageSize        = "preferenceArticleListPageSize" // 一页显示多少篇文章
+	SettingNamePreferenceArticleListWindowSize      = "preferenceArticleListWindowSize" // 文章翻页组件最多显示多少个页码
+	SettingNamePreferenceArticleListStyle           = "preferenceArticleListStyle" // 文章列表风格
+	SettingNamePreferenceMostCommentArticleListSize = "preferenceMostCommentArticleListSize" // 最多显示多少篇评论最多的文章
+	SettingNamePreferenceMostUseTagListSize         = "preferenceMostUseTagListSize" // 最多显示多个常用标签
+	SettingNamePreferenceMostViewArticleListSize    = "preferenceMostViewArticleListSize" // 最多显示多少篇阅读最多的文章
+	SettingNamePreferenceRecentCommentListSize      = "preferenceRecentCommentListSize" // 最多显示多少条最近的评论
+	SettingNamePreferenceRecommendArticleListSize   = "preferenceRecommendArticleListSize" // 最多显示多少篇推荐文章
 )
 
 // Setting values of category "preference".

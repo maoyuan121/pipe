@@ -1,20 +1,3 @@
-// Pipe - A small and beautiful blogging platform written in golang.
-// Copyright (C) 2017-present, b3log.org
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-// Package console defines console controllers.
 package console
 
 import (
@@ -31,7 +14,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// GetBasicSettingsAction gets basic settings.
+// 获取基本设置
 func GetBasicSettingsAction(c *gin.Context) {
 	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -56,7 +39,7 @@ func GetBasicSettingsAction(c *gin.Context) {
 	result.Data = data
 }
 
-// UpdateBasicSettingsAction updates basic settings.
+// 更新基本设置
 func UpdateBasicSettingsAction(c *gin.Context) {
 	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -116,7 +99,7 @@ func UpdateBasicSettingsAction(c *gin.Context) {
 	}
 }
 
-// GetPreferenceSettingsAction gets preference settings.
+// 获取偏好设置
 func GetPreferenceSettingsAction(c *gin.Context) {
 	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -141,7 +124,7 @@ func GetPreferenceSettingsAction(c *gin.Context) {
 	result.Data = data
 }
 
-// UpdatePreferenceSettingsAction updates preference settings.
+// 更新偏好设置
 func UpdatePreferenceSettingsAction(c *gin.Context) {
 	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -219,7 +202,7 @@ func UpdateSignSettingsAction(c *gin.Context) {
 	}
 }
 
-// GetI18nSettingsAction gets i18n settings.
+// 获取本地化设置
 func GetI18nSettingsAction(c *gin.Context) {
 	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -233,7 +216,7 @@ func GetI18nSettingsAction(c *gin.Context) {
 	result.Data = data
 }
 
-// UpdateI18nSettingsAction updates i18n settings.
+// 更新本地化设置
 func UpdateI18nSettingsAction(c *gin.Context) {
 	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -264,7 +247,7 @@ func UpdateI18nSettingsAction(c *gin.Context) {
 	}
 }
 
-// GetFeedSettingsAction gets feed settings.
+// 获取 feed 设置
 func GetFeedSettingsAction(c *gin.Context) {
 	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -288,7 +271,7 @@ func GetFeedSettingsAction(c *gin.Context) {
 	result.Data = data
 }
 
-// UpdateFeedSettingsAction updates feed settings.
+// 更新 feed 设置
 func UpdateFeedSettingsAction(c *gin.Context) {
 	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -327,7 +310,7 @@ func UpdateFeedSettingsAction(c *gin.Context) {
 	}
 }
 
-// GetThirdStatisticSettingsAction gets third statistic settings.
+// 获取第三方统计设置
 func GetThirdStatisticSettingsAction(c *gin.Context) {
 	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -340,7 +323,7 @@ func GetThirdStatisticSettingsAction(c *gin.Context) {
 	result.Data = data
 }
 
-// UpdateThirdStatisticSettingsAction updates third statistic settings.
+// 更新第三方统计设置
 func UpdateThirdStatisticSettingsAction(c *gin.Context) {
 	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -369,7 +352,7 @@ func UpdateThirdStatisticSettingsAction(c *gin.Context) {
 	}
 }
 
-// GetAdSettingsAction get advertisement settings.
+// 获取广告设置
 func GetAdSettingsAction(c *gin.Context) {
 	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -382,7 +365,7 @@ func GetAdSettingsAction(c *gin.Context) {
 	result.Data = data
 }
 
-// UpdateAdSettingsAction update third statistic settings.
+// 更新广告设置
 func UpdateAdSettingsAction(c *gin.Context) {
 	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)

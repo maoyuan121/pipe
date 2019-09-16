@@ -1,19 +1,3 @@
-// Pipe - A small and beautiful blogging platform written in golang.
-// Copyright (C) 2017-present, b3log.org
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package controller
 
 import (
@@ -30,6 +14,7 @@ import (
 	"github.com/vinta/pangu"
 )
 
+// 一个博客的作者列表
 func showAuthorsAction(c *gin.Context) {
 	dataModel := getDataModel(c)
 	blogID := getBlogID(c)
@@ -53,6 +38,7 @@ func showAuthorsAction(c *gin.Context) {
 	c.HTML(http.StatusOK, getTheme(c)+"/authors.html", dataModel)
 }
 
+// 获取一个人在某个博客下写的所有文章
 func showAuthorArticlesAction(c *gin.Context) {
 	authorName := strings.SplitAfter(c.Request.URL.Path, util.PathAuthors+"/")[1]
 	author := service.User.GetUserByName(authorName)

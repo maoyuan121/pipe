@@ -1,19 +1,3 @@
-// Pipe - A small and beautiful blogging platform written in golang.
-// Copyright (C) 2017-present, b3log.org
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package console
 
 import (
@@ -22,82 +6,82 @@ import (
 	"github.com/b3log/pipe/util"
 )
 
-// ConsoleArticle represents console article.
+// 文章
 type ConsoleArticle struct {
-	ID           uint64         `json:"id"`
-	Author       *ConsoleAuthor `json:"author"`
-	CreatedAt    string         `json:"createdAt"`
-	Title        string         `json:"title"`
-	Tags         []*ConsoleTag  `json:"tags"`
-	URL          string         `json:"url"`
-	Topped       bool           `json:"topped"`
-	ViewCount    int            `json:"viewCount"`
-	CommentCount int            `json:"commentCount"`
+	ID           uint64         `json:"id"`           // 主键
+	Author       *ConsoleAuthor `json:"author"`       // 作者
+	CreatedAt    string         `json:"createdAt"`    // 创建时间
+	Title        string         `json:"title"`        // 标题
+	Tags         []*ConsoleTag  `json:"tags"`         // 标签
+	URL          string         `json:"url"`          // url
+	Topped       bool           `json:"topped"`       // 是否指定
+	ViewCount    int            `json:"viewCount"`    // 浏览数
+	CommentCount int            `json:"commentCount"` // 评论数
 }
 
-// ConsoleTag represents console tag.
+// 标签
 type ConsoleTag struct {
-	ID    uint64 `json:"id"`
-	Title string `json:"title"`
-	URL   string `json:"url,omitempty"`
+	ID    uint64 `json:"id"`            // 主键
+	Title string `json:"title"`         // 标签名
+	URL   string `json:"url,omitempty"` // url
 }
 
-// ConsoleAuthor represents console author.
+// 作者
 type ConsoleAuthor struct {
-	URL       string `json:"url"`
-	Name      string `json:"name"`
-	AvatarURL string `json:"avatarURL"`
+	URL       string `json:"url"`       // url
+	Name      string `json:"name"`      // 名字
+	AvatarURL string `json:"avatarURL"` // 头像 url
 }
 
-// AvatarURLWithSize returns avatar URL with the specified size.
+// 返回指定大小的头像 url
 func (u *ConsoleAuthor) AvatarURLWithSize(size int) string {
 	return util.ImageSize(u.AvatarURL, size, size)
 }
 
-// ConsoleCategory represents console category.
+// 分类
 type ConsoleCategory struct {
-	ID          uint64 `json:"id"`
-	Title       string `json:"title"`
-	URL         string `json:"url"`
-	Description string `json:"description"`
-	Number      int    `json:"number"`
-	Tags        string `json:"tags"`
+	ID          uint64 `json:"id"`          // 主键
+	Title       string `json:"title"`       // 分类名
+	URL         string `json:"url"`         // url
+	Description string `json:"description"` // 描述
+	Number      int    `json:"number"`      // 排序号
+	Tags        string `json:"tags"`        // 标签
 }
 
-// ConsoleComment represents console comment.
+// 评论
 type ConsoleComment struct {
-	ID            uint64         `json:"id"`
-	Author        *ConsoleAuthor `json:"author"`
-	ArticleAuthor *ConsoleAuthor `json:"articleAuthor"`
-	CreatedAt     string         `json:"createdAt"`
-	Title         string         `json:"title"`
-	Content       template.HTML  `json:"content"`
-	URL           string         `json:"url"`
+	ID            uint64         `json:"id"`            // 主键
+	Author        *ConsoleAuthor `json:"author"`        // 作者
+	ArticleAuthor *ConsoleAuthor `json:"articleAuthor"` // 文章作者
+	CreatedAt     string         `json:"createdAt"`     // 创建时间
+	Title         string         `json:"title"`         // 标题
+	Content       template.HTML  `json:"content"`       // 内容
+	URL           string         `json:"url"`           // url
 }
 
-// ConsoleNavigation represents console navigation.
+// 导航
 type ConsoleNavigation struct {
-	ID         uint64 `json:"id"`
-	Title      string `json:"title"`
-	URL        string `json:"url"`
-	IconURL    string `json:"iconURL"`
-	OpenMethod string `json:"openMethod"`
-	Number     int    `json:"number"`
+	ID         uint64 `json:"id"`         // 主键
+	Title      string `json:"title"`      // 导航名
+	URL        string `json:"url"`        // url
+	IconURL    string `json:"iconURL"`    // 图标 url
+	OpenMethod string `json:"openMethod"` // 打开方式 （eg: _self、_blank）
+	Number     int    `json:"number"`     // 排序号
 }
 
-// ConsoleTheme represents console theme.
+// 主题
 type ConsoleTheme struct {
-	Name         string `json:"name"`
-	ThumbnailURL string `json:"thumbnailURL"`
+	Name         string `json:"name"`         // 主题名
+	ThumbnailURL string `json:"thumbnailURL"` // 主题缩略图 url
 }
 
-// ConsoleUser represents console user.
+// 用户
 type ConsoleUser struct {
-	ID           uint64 `json:"id"`
-	Name         string `json:"name"`
-	Nickname     string `json:"nickname"`
-	Role         int    `json:"role"`
-	URL          string `json:"url"`
-	AvatarURL    string `json:"avatarURL"`
-	ArticleCount int    `json:"articleCount"`
+	ID           uint64 `json:"id"`           // 主键
+	Name         string `json:"name"`         // 用户名
+	Nickname     string `json:"nickname"`     // 昵称
+	Role         int    `json:"role"`         // 角色
+	URL          string `json:"url"`          // url
+	AvatarURL    string `json:"avatarURL"`    // 头像 url
+	ArticleCount int    `json:"articleCount"` // 发表的文章数
 }

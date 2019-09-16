@@ -67,6 +67,7 @@ func (p *pjaxHTMLWriter) Write(data []byte) (int, error) {
 	return i, e
 }
 
+// 判断是不是 pjax 请求
 func isPJAX(c *gin.Context) bool {
 	return "true" == c.Request.Header.Get("X-PJAX") && "" != c.Request.Header.Get("X-PJAX-Container")
 }

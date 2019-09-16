@@ -28,9 +28,9 @@ type SessionData struct {
 	UID     uint64 // user ID
 	UName   string // username
 	UB3Key  string // user B3 key
-	URole   int    // user role
-	UAvatar string // user avatar URL
-	BID     uint64 // blog ID
+	URole   int    // 用户角色
+	UAvatar string // 用户头像 URL
+	BID     uint64 // 博客ID
 	BURL    string // blog url
 }
 

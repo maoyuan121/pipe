@@ -1,19 +1,3 @@
-// Pipe - A small and beautiful blogging platform written in golang.
-// Copyright (C) 2017-present, b3log.org
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package controller
 
 import (
@@ -32,9 +16,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// DataModel represents data model.
+// 数据模型 key 为 string, value 为 interface{}
 type DataModel map[string]interface{}
 
+// 将用户信息填充到数据模型中 key 为 User
 func fillUser(c *gin.Context) {
 	inited := service.Init.Inited()
 	if !inited && util.PathInit != c.Request.URL.Path {
@@ -186,6 +171,7 @@ func fillMostUseCategories(settingMap *map[string]interface{}, dataModel *DataMo
 	(*dataModel)["MostUseCategories"] = themeCategories
 }
 
+// 最常用的 N 个标签
 func fillMostUseTags(settingMap *map[string]interface{}, dataModel *DataModel, blogID uint64) {
 	tagSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceMostUseTagListSize].(string))
 	if nil != err {
