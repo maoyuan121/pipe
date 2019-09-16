@@ -26,7 +26,7 @@ type ThemeArticle struct {
 	Editable       bool          `json:",omitempty"`
 }
 
-// ThemeTag represents theme tag.
+// 主题标签
 type ThemeTag struct {
 	Title        string `json:"title"`
 	URL          string `json:"url"`

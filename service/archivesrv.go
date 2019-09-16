@@ -1,4 +1,3 @@
-// Package service 是业务逻辑层，封装了事务
 package service
 
 import (
@@ -8,15 +7,17 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-// Archive service.
+// 实例化一个归档服务对象
 var Archive = &archiveService{
 	mutex: &sync.Mutex{},
 }
 
+// 定义归档服务
 type archiveService struct {
 	mutex *sync.Mutex
 }
 
+// 获取一个博客的所有归档信息
 func (srv *archiveService) GetArchives(blogID uint64) []*model.Archive {
 	var ret []*model.Archive
 	if err := db.Where("`blog_id` = ? AND `article_count` > 0", blogID).Order("`year` DESC, `month` DESC").Find(&ret).Error; nil != err {
@@ -54,7 +55,10 @@ func (srv *archiveService) UnArchiveArticleWithoutTx(tx *gorm.DB, article *model
 	return nil
 }
 
+// 归档这篇文章
+// 更新归档统计数据，保存归档和文章的关系
 func (srv *archiveService) ArchiveArticleWithoutTx(tx *gorm.DB, article *model.Article) error {
+	// 加锁，防并发引起的问题
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
@@ -69,6 +73,7 @@ func (srv *archiveService) ArchiveArticleWithoutTx(tx *gorm.DB, article *model.A
 		}
 	}
 	archive.ArticleCount++
+	// save == upsert
 	if err := tx.Save(archive).Error; nil != err {
 		return err
 	}
@@ -86,6 +91,7 @@ func (srv *archiveService) ArchiveArticleWithoutTx(tx *gorm.DB, article *model.A
 	return nil
 }
 
+// 获取一个博客的指定年月的归档信息
 func (srv *archiveService) GetArchive(year, month string, blogID uint64) *model.Archive {
 	ret := &model.Archive{}
 	if err := db.Where("`year` = ? AND `month` = ? AND `blog_id` = ?",

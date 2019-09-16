@@ -2,12 +2,13 @@
   <div class="card">
     <div class="card__body fn__flex" v-show="!isBatch">
       <v-text-field v-if="list.length > 0 || isSearch"
-        @keyup.enter="getList();isSearch = true"
-        class="fn__flex-1"
-        :label="$t('enterSearch', $store.state.locale)"
-        v-model="keyword">
+                    @keyup.enter="getList();isSearch = true"
+                    class="fn__flex-1"
+                    :label="$t('enterSearch', $store.state.locale)"
+                    v-model="keyword">
       </v-text-field>
-      <nuxt-link to="/admin/articles/post" class="btn btn--success" :class="{'btn--new': list.length > 0 || isSearch}">{{ $t('new', $store.state.locale)
+      <nuxt-link to="/admin/articles/post" class="btn btn--success" :class="{'btn--new': list.length > 0 || isSearch}">
+        {{ $t('new', $store.state.locale)
         }}
       </nuxt-link>
     </div>
@@ -115,30 +116,36 @@
 
 <script>
   export default {
-    data () {
+    data() {
       return {
         isSearch: false,
-        isSelectAll: false,
-        isBatch: false,
-        selectedIds: [],
-        currentPageNum: 1,
-        pageCount: 1,
+        isSelectAll: false, // 是否选择了所有文章
+        isBatch: false, //
+        selectedIds: [], // 选择的文章 Id 数组
+        currentPageNum: 1, // 当前页数
+        pageCount: 1, // 总页数
         windowSize: 1,
-        list: [],
-        userCount: 1,
-        keyword: ''
+        list: [], // 文章数组
+        userCount: 1, // 用户数
+        keyword: '' // 关键字（用于搜索文章）
       }
     },
-    head () {
+
+    head() {
       return {
         title: `${this.$t('articleList', this.$store.state.locale)} - ${this.$store.state.blogTitle}`
       }
     },
+
     methods: {
-      openURL (url) {
+      // 就地跳转到指定的 URL
+      openURL(url) {
         window.location.href = url
       },
-      selectAll () {
+
+      // 选择或者取消选择所有文章
+      // 设置 isSelectAll 和 selectedIds
+      selectAll() {
         this.$set(this, 'isSelectAll', !this.isSelectAll)
         if (!this.isSelectAll) {
           this.$set(this, 'selectedIds', [])
@@ -151,7 +158,9 @@
         })
         this.$set(this, 'selectedIds', selectedIds)
       },
-      isSelected (id) {
+
+      // 判断有没有选择指定 id 的这篇文章
+      isSelected(id) {
         let isSelected = false
         this.selectedIds.forEach((data) => {
           if (data === id) {
@@ -160,7 +169,9 @@
         })
         return isSelected
       },
-      async batchAction () {
+
+      // todo
+      async batchAction() {
         if (this.selectedIds.length === 0) {
           return
         }
@@ -181,7 +192,9 @@
           this.$set(this, 'errorMsg', responseData.msg)
         }
       },
-      setSelectedId (id) {
+
+      // 选择或者取消选择指定 id 的文章
+      setSelectedId(id) {
         let isSelected = false
         this.selectedIds.forEach((data) => {
           if (data === id) {
@@ -205,7 +218,9 @@
           this.$set(this, 'isSelectAll', false)
         }
       },
-      async getList (currentPage = 1) {
+
+      // 获取文章集合数据
+      async getList(currentPage = 1) {
         const responseData = await this.axios.get(`/console/articles?p=${currentPage}&key=${this.keyword}`)
         if (responseData) {
           this.$set(this, 'userCount', responseData.userCount)
@@ -215,7 +230,9 @@
           this.$set(this, 'windowSize', document.documentElement.clientWidth < 721 ? 5 : responseData.pagination.windowSize)
         }
       },
-      async remove (id) {
+
+      // 删除文章
+      async remove(id) {
         if (!confirm(this.$t('confirmDelete', this.$store.state.locale))) {
           return
         }
@@ -229,7 +246,9 @@
           this.getList()
         }
       },
-      async syncToCommunity (id) {
+
+      // 将文章同步到社区
+      async syncToCommunity(id) {
         const responseData = await this.axios.get(`/console/articles/${id}/push`)
         if (responseData === null) {
           this.$store.commit('setSnackBar', {
@@ -239,11 +258,13 @@
           })
         }
       },
-      goEdit (id) {
+
+      // 跳转到编辑指定文章的页面
+      goEdit(id) {
         this.$router.push(`/admin/articles/post?id=${id}`)
       }
     },
-    mounted () {
+    mounted() {
       this.getList()
     }
   }

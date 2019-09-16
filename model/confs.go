@@ -24,7 +24,7 @@ const Version = "1.8.9"
 // Conf of Pipe.
 var Conf *Configuration
 
-// UserAgent represents HTTP client user agent.
+// HTTP Client 的 UserAgent
 var UserAgent = "Pipe/" + Version + "; +https://github.com/b3log/pipe"
 
 // Models 表示所有的模型
@@ -36,13 +36,13 @@ var Models = []interface{}{
 // 表前缀
 const tablePrefix = "b3_pipe_"
 
-// ZeroPushTime represents zero push time.
+// Push 到 blog 的时间的零值
 var ZeroPushTime, _ = time.Parse("2006-01-02 15:04:05", "2006-01-02 15:04:05")
 
-// Configuration (pipe.json).
+// 配置信息 (对应 pipe.json).
 type Configuration struct {
 	Server                string // server scheme, host and port
-	StaticServer          string // static resources server scheme, host and port
+	StaticServer          string // 静态资源的 host 和 port
 	StaticResourceVersion string // version of static resources
 	LogLevel              string // logging level: trace/debug/info/warn/error/fatal
 	ShowSQL               bool   // 是否在 log 中打印 sql

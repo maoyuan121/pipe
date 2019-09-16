@@ -1,7 +1,7 @@
-// Package model is the "model" layer which defines entity structures with ORM and controller.
 package model
 
 // 归档信息
+// 用于统计一个博客某年某月发表了多少篇文章
 type Archive struct {
 	Model
 

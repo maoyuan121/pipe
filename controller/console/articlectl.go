@@ -1,19 +1,3 @@
-// Pipe - A small and beautiful blogging platform written in golang.
-// Copyright (C) 2017-present, b3log.org
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 // Package console defines console controllers.
 package console
 
@@ -38,7 +22,7 @@ import (
 // Logger
 var logger = gulu.Log.NewLogger(os.Stdout)
 
-// PushArticle2RhyAction pushes an article to community.
+// 将文章推送到社区
 func PushArticle2RhyAction(c *gin.Context) {
 	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -51,7 +35,7 @@ func PushArticle2RhyAction(c *gin.Context) {
 		return
 	}
 
-	article := service.Article.ConsoleGetArticle(uint64(id))
+	article := service.Article.ConsoleGetArticle(id)
 	if nil == article {
 		result.Code = util.CodeErr
 
@@ -143,7 +127,7 @@ func UploadTokenAction(c *gin.Context) {
 	result.Data = requestResult.Data
 }
 
-// AddArticleAction adds a new article.
+// 新建一篇文章
 func AddArticleAction(c *gin.Context) {
 	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -194,7 +178,7 @@ func AddArticleAction(c *gin.Context) {
 	}
 }
 
-// GetArticleAction gets an article.
+// 获取一篇文章
 func GetArticleAction(c *gin.Context) {
 	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -207,7 +191,7 @@ func GetArticleAction(c *gin.Context) {
 		return
 	}
 
-	article := service.Article.ConsoleGetArticle(uint64(id))
+	article := service.Article.ConsoleGetArticle(id)
 	if nil == article {
 		result.Code = util.CodeErr
 

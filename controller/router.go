@@ -1,19 +1,3 @@
-// Pipe - A small and beautiful blogging platform written in golang.
-// Copyright (C) 2017-present, b3log.org
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package controller
 
 import (
@@ -37,9 +21,10 @@ import (
 // Logger
 var logger = gulu.Log.NewLogger(os.Stdout)
 
-// MapRoutes returns a gin engine and binds controllers with request URLs.
+// 返回一个 gin engine， 将请求 URL 绑定到控制器
 func MapRoutes() *gin.Engine {
 	ret := gin.New()
+	// 为模板添加函数
 	ret.SetFuncMap(template.FuncMap{
 		"dict": func(values ...interface{}) (map[string]interface{}, error) {
 			if len(values)%2 != 0 {
@@ -60,11 +45,13 @@ func MapRoutes() *gin.Engine {
 		"noescape": func(s string) template.HTML { return template.HTML(s) },
 	})
 
+	// 如果是开发模式使用 Logger
 	if "dev" == model.Conf.RuntimeMode {
 		ret.Use(gin.Logger())
 	}
 	ret.Use(gin.Recovery())
 
+	// 定义 session cookie 存储
 	store := cookie.NewStore([]byte(model.Conf.SessionSecret))
 	store.Options(sessions.Options{
 		Path:     "/",
@@ -73,9 +60,12 @@ func MapRoutes() *gin.Engine {
 		HttpOnly: true,
 	})
 	ret.Use(sessions.Sessions("pipe", store))
+
+
 	ret.GET(util.PathPlatInfo, showPlatInfoAction)
 	ret.GET(util.PathSitemap, outputSitemapAction)
 
+	// api
 	api := ret.Group(util.PathAPI)
 	api.POST("/logout", logoutAction)
 	api.Any("/hp/*apis", util.HacPaiAPI())
@@ -85,13 +75,14 @@ func MapRoutes() *gin.Engine {
 	api.GET("/oauth/github/redirect", redirectGitHubLoginAction)
 	api.GET("/oauth/github/callback", githubCallbackAction)
 
+	// api/管理页面
 	consoleGroup := api.Group("/console")
+	// api/管理页面都需要登录
 	consoleGroup.Use(console.LoginCheck)
-
+	// 如果是开发模式定义生成示例文章的路由
 	if "dev" == model.Conf.RuntimeMode {
 		consoleGroup.GET("/dev/articles/gen", console.GenArticlesAction)
 	}
-
 	consoleGroup.GET("/themes", console.GetThemesAction)
 	consoleGroup.PUT("/themes/:id", console.UpdateThemeAction)
 	consoleGroup.GET("/tags", console.GetTagsAction)
@@ -126,6 +117,7 @@ func MapRoutes() *gin.Engine {
 	consoleGroup.GET("/export/md", console.ExportMarkdownAction)
 	// consoleGroup.POST("/blogs/switch/:id", console.BlogSwitchAction)
 
+	// api/管理页面/设置
 	consoleSettingsGroup := consoleGroup.Group("/settings")
 	consoleSettingsGroup.GET("/basic", console.GetBasicSettingsAction)
 	consoleSettingsGroup.PUT("/basic", console.UpdateBasicSettingsAction)
@@ -144,15 +136,19 @@ func MapRoutes() *gin.Engine {
 	consoleSettingsGroup.GET("/account", console.GetAccountAction)
 	consoleSettingsGroup.PUT("/account", console.UpdateAccountAction)
 
+	// 静态文件路由
 	ret.StaticFile(util.PathFavicon, "console/static/favicon.ico")
 	ret.StaticFile(util.PathManifest, "console/static/manifest.json")
 
+	// 资源文件目录路由
 	ret.Static(util.PathTheme+"/scss", "theme/scss")
 	ret.Static(util.PathTheme+"/js", "theme/js")
 	ret.Static(util.PathTheme+"/images", "theme/images")
+	// 静态资源文件路由
 	ret.StaticFile("/sw.min.js", "theme/sw.min.js")
 	ret.StaticFile("/halt.html", "theme/halt.html")
 
+	// 主题资源文件
 	for _, theme := range theme.Themes {
 		themePath := "theme/x/" + theme
 		ret.Static("/theme/x/"+theme+"/css", themePath+"/css")
@@ -160,6 +156,8 @@ func MapRoutes() *gin.Engine {
 		ret.Static("/theme/x/"+theme+"/images", themePath+"/images")
 		ret.StaticFile("/theme/x/"+theme+"/thumbnail.jpg", themePath+"/thumbnail.jpg")
 	}
+
+	// 主题模板
 	themeTemplates, err := filepath.Glob("theme/x/*/*.html")
 	if nil != err {
 		logger.Fatal("load theme templates failed: " + err.Error())
@@ -176,16 +174,19 @@ func MapRoutes() *gin.Engine {
 	templates := append(themeTemplates, commentTemplates...)
 	templates = append(templates, headTemplates...)
 	ret.LoadHTMLFiles(templates...)
+
 	themeGroup := ret.Group(util.PathBlogs + "/:username")
 	themeGroup.Use(fillUser, pjax, resolveBlog)
 	themeGroup.GET("", showArticlesAction)
 	themeGroup.Any("/*path", routePath)
 
+	// admin 前缀
 	adminPagesGroup := ret.Group(util.PathAdmin)
 	adminPagesGroup.Use(fillUser)
 	adminPagesGroup.GET("", console.ShowAdminPagesAction)
 	adminPagesGroup.GET("/*path", console.ShowAdminPagesAction)
 
+	// / 前缀
 	indexGroup := ret.Group("")
 	indexGroup.Use(fillUser)
 	indexGroup.GET("", showIndexAction)
@@ -197,6 +198,8 @@ func MapRoutes() *gin.Engine {
 	ret.Static(util.PathConsoleDist, "console/dist")
 	ret.StaticFile(util.PathChangelogs, "changelogs.html")
 	ret.StaticFile(util.PathRobots, "theme/robots.txt")
+
+	// 没有匹配到路由的话
 	ret.NoRoute(func(c *gin.Context) {
 		notFound(c)
 	})

@@ -5,7 +5,7 @@ const (
 	CorrelationCategoryTag = iota
 	CorrelationArticleTag
 	CorrelationBlogUser
-	CorrelationArticleArchive
+	CorrelationArticleArchive // 文章 ID，归档 ID，博客 ID
 )
 
 // 关联表

@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-// Article model.
+// 文章
 type Article struct {
 	Model
 

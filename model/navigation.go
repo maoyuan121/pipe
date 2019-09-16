@@ -14,6 +14,6 @@ type Navigation struct {
 
 // Navigation open methods.
 const (
-	NavigationOpenMethodBlank = "_blank"
-	NavigationOpenMethodSelf  = "_self"
+	NavigationOpenMethodBlank = "_blank" // 新开窗口
+	NavigationOpenMethodSelf  = "_self"  // 就地跳转
 )

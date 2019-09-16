@@ -1,19 +1,3 @@
-// Pipe - A small and beautiful blogging platform written in golang.
-// Copyright (C) 2017-present, b3log.org
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package service
 
 import (
@@ -28,11 +12,12 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-// Category service.
+// 实例化一个分类服务对象
 var Category = &categoryService{
 	mutex: &sync.Mutex{},
 }
 
+// 定义分类服务
 type categoryService struct {
 	mutex *sync.Mutex
 }
@@ -43,6 +28,7 @@ const (
 	adminConsoleCategoryListWindowSize = 20
 )
 
+// 根据 path 在指定博客下获取分类
 func (srv *categoryService) GetCategoryByPath(path string, blogID uint64) *model.Category {
 	path = strings.TrimSpace(path)
 	if "" == path || util.IsReservedPath(path) {
@@ -58,6 +44,8 @@ func (srv *categoryService) GetCategoryByPath(path string, blogID uint64) *model
 	return ret
 }
 
+// 更新分类
+// 更新分类和标签的关系
 func (srv *categoryService) UpdateCategory(category *model.Category) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
@@ -97,6 +85,7 @@ func (srv *categoryService) UpdateCategory(category *model.Category) error {
 	return nil
 }
 
+// 获取分类 for console
 func (srv *categoryService) ConsoleGetCategory(id uint64) *model.Category {
 	ret := &model.Category{}
 	if err := db.First(ret, id).Error; nil != err {
@@ -106,6 +95,8 @@ func (srv *categoryService) ConsoleGetCategory(id uint64) *model.Category {
 	return ret
 }
 
+// 新建分类
+// 新增分类和标签的关系
 func (srv *categoryService) AddCategory(category *model.Category) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
@@ -133,6 +124,7 @@ func (srv *categoryService) AddCategory(category *model.Category) error {
 	return nil
 }
 
+// 通过 tag 获取分类
 func (srv *categoryService) GetCategoriesByTag(tagTitle string, blogID uint64) (ret []*model.Category) {
 	if err := db.Where("`blog_id` = ? AND `tags` LIKE ?", blogID, tagTitle).Find(&ret).Error; nil != err {
 		logger.Errorf("get categories failed: " + err.Error())
@@ -141,6 +133,7 @@ func (srv *categoryService) GetCategoriesByTag(tagTitle string, blogID uint64) (
 	return
 }
 
+// 获取指定博客下的分类列列表 for console
 func (srv *categoryService) ConsoleGetCategories(page int, blogID uint64) (ret []*model.Category, pagination *util.Pagination) {
 	offset := (page - 1) * adminConsoleCategoryListPageSize
 	count := 0
@@ -155,6 +148,7 @@ func (srv *categoryService) ConsoleGetCategories(page int, blogID uint64) (ret [
 	return
 }
 
+// 获取指定博客下的 N 个分类（按 number 升序）
 func (srv *categoryService) GetCategories(size int, blogID uint64) (ret []*model.Category) {
 	if err := db.Where("`blog_id` = ?", blogID).Order("`number` asc").Limit(size).Find(&ret).Error; nil != err {
 		logger.Errorf("get categories failed: " + err.Error())
@@ -163,6 +157,8 @@ func (srv *categoryService) GetCategories(size int, blogID uint64) (ret []*model
 	return
 }
 
+// 删除分类
+// 删除分类和标签的关系
 func (srv *categoryService) RemoveCategory(id, blogID uint64) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
@@ -210,6 +206,7 @@ func normalizeCategoryPath(category *model.Category) error {
 	return nil
 }
 
+// 新建分类和标签的关系
 func tagCategory(tx *gorm.DB, category *model.Category) error {
 	tags := strings.Split(category.Tags, ",")
 	for _, tagTitle := range tags {
