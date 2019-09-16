@@ -1,19 +1,3 @@
-// Pipe - A small and beautiful blogging platform written in golang.
-// Copyright (C) 2017-present, b3log.org
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package service
 
 import (
@@ -29,10 +13,13 @@ import (
 // Logger
 var logger = gulu.Log.NewLogger(os.Stdout)
 
+// 数据库
 var db *gorm.DB
+
+// 是不是用的 SQLite
 var useSQLite bool
 
-// ConnectDB connects to the database.
+// 连接数据库、迁移数据库、创建索引、相关数据库的设置
 func ConnectDB() {
 	var err error
 	useSQLite = false
@@ -53,10 +40,13 @@ func ConnectDB() {
 		logger.Debug("used [MySQL] as underlying database")
 	}
 
+	// 迁移数据库
 	if err = db.AutoMigrate(model.Models...).Error; nil != err {
 		logger.Fatal("auto migrate tables failed: " + err.Error())
 	}
 
+	// 添加索引
+	// 为文章的 created_at 创建索引
 	if err = db.Model(&model.Article{}).AddIndex("idx_b3_pipe_articles_created_at", "created_at").Error; nil != err {
 		logger.Fatal("adds index failed: " + err.Error())
 	}
@@ -66,14 +56,14 @@ func ConnectDB() {
 	db.LogMode(model.Conf.ShowSQL)
 }
 
-// DisconnectDB disconnects from the database.
+// 关闭数据库连接
 func DisconnectDB() {
 	if err := db.Close(); nil != err {
 		logger.Errorf("Disconnect from database failed: " + err.Error())
 	}
 }
 
-// Database returns the underlying database name.
+// 返回使用的是什么数据库 SQLite 或者 MySQL
 func Database() string {
 	if useSQLite {
 		return "SQLite"

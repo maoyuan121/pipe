@@ -56,7 +56,7 @@ type Configuration struct {
 	MockServer            string // mock 服务器地址
 }
 
-// 从加载配置，命令行的参数会覆盖配置文件的配置
+// 加载配置，命令行的参数会覆盖配置文件的配置
 func LoadConf() {
 	version := flag.Bool("version", false, "prints current pipe version")
 	confPath := flag.String("conf", "pipe.json", "path of pipe.json")

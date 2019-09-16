@@ -1,20 +1,4 @@
-// Pipe - A small and beautiful blogging platform written in golang.
-// Copyright (C) 2017-present, b3log.org
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-// Package i18n includes internationalization related manipulations.
+// 包含多语言和相关的操作
 package i18n
 
 import (
@@ -38,19 +22,27 @@ type locale struct {
 	TimeZone string                 // 时区
 }
 
+// 多语言
+// key 为 语种，value 为语言包和时区
+// 多语言的数据都存在这个结构中
+// 程序都是从这获取语言
 var locales = map[string]locale{}
 
-// Load loads i18n message configurations.
+// 加载多语言
+// 多语言多外的初始化方法
+// 遍历 i18n 文件夹下的文件，将其中的 xxx.json 语言文件的内容加载进来
 func Load() {
 	f, _ := os.Open("i18n")
 	names, _ := f.Readdirnames(-1)
 	f.Close()
 
 	for _, name := range names {
+		// 如果文件名的第一个字符不是字母，或者文件不是 .json continue
 		if !gulu.Rune.IsLetter(rune(name[0])) || !strings.HasSuffix(name, ".json") {
 			continue
 		}
 
+		// loc 为语种
 		loc := name[:strings.LastIndex(name, ".")]
 		load(loc)
 	}
@@ -58,6 +50,7 @@ func Load() {
 	logger.Tracef("loaded [%d] language configuration files", len(locales))
 }
 
+// 根据指定的语种从对应的 xxx.json 中加载语言到 locales 中去
 func load(localeStr string) {
 	bytes, err := ioutil.ReadFile("i18n/" + localeStr + ".json")
 	if nil != err {
@@ -74,24 +67,25 @@ func load(localeStr string) {
 	locales[localeStr] = l
 }
 
-// GetMessagef gets a message with the specified locale, key and arguments
+// 根据给定的语种，获取给定 key 和 args 对应的文本
 func GetMessagef(locale, key string, a ...interface{}) string {
 	msg := GetMessage(locale, key)
 
 	return fmt.Sprintf(msg, a...)
 }
 
-// GetMessage gets a message with the specified locale and key.
+// 根据给定的语种，获取给定 key 对应的文本
 func GetMessage(locale, key string) string {
 	return locales[locale].Langs[key].(string)
 }
 
-// GetMessages gets all messages with the specified locale.
+// 获取指定语种的语言包
 func GetMessages(locale string) map[string]interface{} {
 	return locales[locale].Langs
 }
 
-// GetLocalesNames gets names of all locales. Returns ["zh_CN", "en_US"] for example.
+// 获取多语言支持的语种
+// 例如返回 ["zh_CN", "en_US"]
 func GetLocalesNames() []string {
 	var ret []string
 
