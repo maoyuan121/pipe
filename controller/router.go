@@ -207,6 +207,7 @@ func MapRoutes() *gin.Engine {
 	return ret
 }
 
+// 博客前端路由
 func routePath(c *gin.Context) {
 	path := c.Param("path")
 
