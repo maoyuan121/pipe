@@ -17,16 +17,16 @@ type commentService struct {
 	mutex *sync.Mutex
 }
 
-// Comment pagination arguments of admin console.
+// 后台的评论分页信息
 const (
-	adminConsoleCommentListPageSize   = 15
-	adminConsoleCommentListWindowSize = 20
+	adminConsoleCommentListPageSize   = 15 // 管理界面一页显示多少条评论
+	adminConsoleCommentListWindowSize = 20 // 管理界面最多显示多少个页码按钮
 )
 
-// Comment pagination arguments of theme.
+// 前台的评论分页信息
 const (
-	themeCommentListPageSize   = 15
-	themeCommentListWindowSize = 20
+	themeCommentListPageSize   = 15 // 前台界面一页显示多少条评论
+	themeCommentListWindowSize = 20 // 前台界面最多显示多少个页码按钮
 )
 
 // 更新 PUSH 时间 为 UpdatedAt

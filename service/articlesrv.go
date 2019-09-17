@@ -28,10 +28,10 @@ type articleService struct {
 	mutex *sync.Mutex
 }
 
-// Article pagination arguments of admin console.
+// 后台的文章分页信息
 const (
 	adminConsoleArticleListPageSize   = 15 // 管理界面一页显示多少条文章
-	adminConsoleArticleListWindowSize = 20
+	adminConsoleArticleListWindowSize = 20 // 管理界面最多显示多少个页码按钮
 )
 
 // 获取阅读数最多的 N 篇文章

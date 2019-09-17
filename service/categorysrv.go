@@ -22,10 +22,10 @@ type categoryService struct {
 	mutex *sync.Mutex
 }
 
-// Category pagination arguments of admin console.
+// 后台的分类分页信息
 const (
-	adminConsoleCategoryListPageSize   = 15
-	adminConsoleCategoryListWindowSize = 20
+	adminConsoleCategoryListPageSize   = 15 // 管理界面一页显示多少分类
+	adminConsoleCategoryListWindowSize = 20 // 管理界面最多显示多少个页码按钮
 )
 
 // 根据 path 在指定博客下获取分类
