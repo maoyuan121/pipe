@@ -31,8 +31,8 @@
       return {
         errorMsg: '', // 错误消息
         error: false, // 是否发生错误
-        name: '', 
-        requiredRules: [
+        name: '',  // 博客的名字
+        requiredRules: [ // 表单验证规则
           (v) => required.call(this, v),
           (v) => maxSize.call(this, v, 32)
         ]

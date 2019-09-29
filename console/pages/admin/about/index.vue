@@ -3,38 +3,66 @@
     <div class="card__body">
       <div class="fn__flex admin__about">
         <div class="about__side">
-          <img src="~assets/images/logo.png"/> <br>
-          <a class="btn btn--info btn--margin-t30 btn--block btn--success"
-             target="_blank"
-             href="https://b3log.org/donate.html">{{ $t('becomeSponsor', $store.state.locale) }}</a>
+          <img src="~assets/images/logo.png" />
+          <br />
+          <a
+            class="btn btn--info btn--margin-t30 btn--block btn--success"
+            target="_blank"
+            href="https://b3log.org/donate.html"
+          >{{ $t('becomeSponsor', $store.state.locale) }}</a>
         </div>
         <div class="fn__flex-1 vditor-reset">
           <h2 class="fn__clear" v-if="isLatest">
             <span class="fn__left">
               {{ $t('about1', $store.state.locale) }}
-              <a :href="download" target="_blank">{{ version }}</a>
+              <a
+                :href="download"
+                target="_blank"
+              >{{ version }}</a>
             </span>
-            <iframe class="about__github fn__left"
-                    src="https://ghbtns.com/github-btn.html?user=b3log&repo=pipe&type=star&count=true&size=large"
-                    frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            <iframe
+              class="about__github fn__left"
+              src="https://ghbtns.com/github-btn.html?user=b3log&repo=pipe&type=star&count=true&size=large"
+              frameborder="0"
+              scrolling="0"
+              width="160px"
+              height="30px"
+            ></iframe>
           </h2>
           <h2 class="fn__clear" v-else>
             <span class="fn__left">
-               {{ $t('about2', $store.state.locale) }}
-              <a class="ft__danger" :href="download" target="_blank">{{ version }}</a>
+              {{ $t('about2', $store.state.locale) }}
+              <a
+                class="ft__danger"
+                :href="download"
+                target="_blank"
+              >{{ version }}</a>
             </span>
-            <iframe class="about__github fn__left"
-                    src="https://ghbtns.com/github-btn.html?user=b3log&repo=pipe&type=star&count=true&size=large"
-                    frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            <iframe
+              class="about__github fn__left"
+              src="https://ghbtns.com/github-btn.html?user=b3log&repo=pipe&type=star&count=true&size=large"
+              frameborder="0"
+              scrolling="0"
+              width="160px"
+              height="30px"
+            ></iframe>
           </h2>
           <p v-html="$t('about4', $store.state.locale)"></p>
           <p v-html="$t('about3', $store.state.locale)"></p>
           <p>
-            <a href="https://github.com/b3log/pipe-themes" target="_blank" class="about__link btn btn--info">
+            <a
+              href="https://github.com/b3log/pipe-themes"
+              target="_blank"
+              class="about__link btn btn--info"
+            >
               <v-icon>github</v-icon>
               {{ $t('theme', $store.state.locale) }}
             </a>
-            <a href="https://hacpai.com/article/1513761942333" target="_blank" class="about__link btn btn--info">
+            <a
+              href="https://hacpai.com/article/1513761942333"
+              target="_blank"
+              class="about__link btn btn--info"
+            >
               <v-icon>file-text</v-icon>
               {{ $t('doc', $store.state.locale) }}
             </a>
@@ -43,8 +71,7 @@
               {{ $t('community', $store.state.locale) }}
             </a>
             <a href="https://b3log.org" target="_blank" class="about__link btn btn--info">
-              <v-icon>b3log-logo2</v-icon>
-              B3log
+              <v-icon>b3log-logo2</v-icon>B3log
             </a>
           </p>
         </div>
@@ -54,28 +81,34 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        isLatest: true, // 是否始最新的版本
-        download: '', // 下载地址
-        version: '' // 版本号
-      }
-    },
-    head () {
-      return {
-        title: `${this.$t('about', this.$store.state.locale)} - ${this.$store.state.blogTitle}`
-      }
-    },
-    async mounted () {
-      const responseData = await this.axios.get(`check-version`)
-      if (responseData) {
-        this.$set(this, 'isLatest', this.$store.state.version === responseData.version)
-        this.$set(this, 'download', responseData.download)
-        this.$set(this, 'version', responseData.version)
-      }
+export default {
+  data() {
+    return {
+      isLatest: true, // 是否始最新的版本
+      download: "", // 下载地址
+      version: "" // 版本号
+    };
+  },
+  head() {
+    return {
+      title: `${this.$t("about", this.$store.state.locale)} - ${
+        this.$store.state.blogTitle
+      }`
+    };
+  },
+  async mounted() {
+    const responseData = await this.axios.get(`check-version`);
+    if (responseData) {
+      this.$set(
+        this,
+        "isLatest",
+        this.$store.state.version === responseData.version
+      );
+      this.$set(this, "download", responseData.download);
+      this.$set(this, "version", responseData.version);
     }
   }
+};
 </script>
 
 <style lang="sass">
@@ -83,7 +116,7 @@
 
   .admin__about
     .vditor-reset h2
-      font-size: 1.4em
+    font-size: 1.4em
     .about
       &__side
         margin: 30px 50px 0 30px
