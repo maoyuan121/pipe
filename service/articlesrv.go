@@ -207,7 +207,7 @@ func (srv *articleService) ConsoleGetArticles(keyword string, page int, blogID u
 	return
 }
 
-// 查询指定博客下面的文章列表
+// 查询指定博客下面的文章列表 for 前台网站
 func (srv *articleService) GetArticles(keyword string, page int, blogID uint64) (ret []*model.Article, pagination *util.Pagination) {
 	pageSize, windowSize := getPageWindowSize(blogID)
 	offset := (page - 1) * pageSize

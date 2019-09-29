@@ -32,7 +32,7 @@
     data () {
       return {
         flex: '',
-        list: []
+        list: [] // 热门博客
       }
     },
     async mounted () {

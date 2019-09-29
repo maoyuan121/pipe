@@ -1,3 +1,6 @@
+import Vuetify from "vuetify";
+import VueI18n from "./plugins/init";
+
 const env = require(`../pipe.json`)
 
 module.exports = {
@@ -36,13 +39,14 @@ module.exports = {
     '~assets/scss/main.scss'
   ],
   /*
-  ** 该配置项用于配置那些需要在 根vue.js应用 实例化之前需要运行的 Javascript 插件。
+  ** 该配置项用于配置的所有插件会在 Nuxt.js 应用初始化之前被加载导入
+  ** ssr: Boolean (默认为 true) 如果值为 false，该文件只会在客户端被打包引入。
   ** https://zh.nuxtjs.org/api/configuration-plugins
   */
   plugins: [
-    { src: '~/plugins/axios.js', ssr: false },
-    { src: '~/plugins/init.js', ssr: false },
-    { src: '~/plugins/nuxt-client-init.js', ssr: false }
+    { src: '~/plugins/axios.js', ssr: false }, // 个性化下 axios， eg：代理地址、请求出错的时候弹出错误提示信息层
+    { src: '~/plugins/init.js', ssr: false }, // 使用 Vuetify VueI18n
+    { src: '~/plugins/nuxt-client-init.js', ssr: false } // 加载多语言，获取当前用户等信息
   ],
   mode: 'spa',
   /*

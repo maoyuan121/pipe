@@ -24,11 +24,11 @@ export default (ctx) => {
   customAxios.interceptors.response.use((response) => {
     if (response.config.method === 'get' || response.config.method === 'delete') {
       // get and delete use snack tip
-      if (response.data.code === 0) {
+      if (response.data.code === 0) { // 如果正常 返回数据
         return response.data.data
-      } else if(response.data.code == -2) {
+      } else if(response.data.code == -2) { // 如果没有权限 跳转到登录页
         window.location.href = `${ctx.env.Server}/start`
-      } else {
+      } else { // 否则弹出消息
         ctx.store.commit('setSnackBar', {
           snackBar: true,
           snackMsg: response.data.msg

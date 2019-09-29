@@ -23,7 +23,7 @@ export const state = () => ({
 })
 
 // mutation 只能有同步方法
-// 用于改变 store 的数据
+// 用于改变 store 的 state
 export const mutations = {
   setMenu (state, data) {
     state.menu = data

@@ -6,7 +6,7 @@ import (
 	"github.com/b3log/pipe/util"
 )
 
-// ThemeArticle represents theme article.
+// 文章
 type ThemeArticle struct {
 	ID             uint64        `json:",omitempty"`
 	Abstract       template.HTML `json:"abstract"`
@@ -26,7 +26,7 @@ type ThemeArticle struct {
 	Editable       bool          `json:",omitempty"`
 }
 
-// 主题标签
+// 标签
 type ThemeTag struct {
 	Title        string `json:"title"`
 	URL          string `json:"url"`
